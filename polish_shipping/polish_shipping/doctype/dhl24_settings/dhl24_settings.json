@@ -1,0 +1,201 @@
+{
+ "actions": [],
+ "creation": "2026-11-02 12:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "api_section",
+  "username",
+  "password",
+  "column_break_api",
+  "account_number",
+  "use_sandbox",
+  "services_section",
+  "product_ah",
+  "product_pr",
+  "column_break_products",
+  "product_09",
+  "product_12",
+  "product_dw",
+  "column_break_services",
+  "default_product",
+  "label_type",
+  "payment_section",
+  "payer_type",
+  "column_break_payment",
+  "costs_center",
+  "waybill_section",
+  "comment_template"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "api_section",
+   "fieldtype": "Section Break",
+   "label": "WebAPI Access"
+  },
+  {
+   "description": "The WebAPI key DHL24 gave you",
+   "fieldname": "username",
+   "fieldtype": "Data",
+   "label": "Username",
+   "mandatory_depends_on": "enabled"
+  },
+  {
+   "fieldname": "password",
+   "fieldtype": "Password",
+   "label": "Password",
+   "mandatory_depends_on": "enabled"
+  },
+  {
+   "fieldname": "column_break_api",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "The DHL customer number of the payer",
+   "fieldname": "account_number",
+   "fieldtype": "Data",
+   "label": "SAP Number",
+   "length": 7,
+   "mandatory_depends_on": "enabled"
+  },
+  {
+   "default": "0",
+   "description": "Send the requests to sandbox.dhl24.com.pl, for a sandbox account",
+   "fieldname": "use_sandbox",
+   "fieldtype": "Check",
+   "label": "Use Sandbox"
+  },
+  {
+   "description": "The services shown with the shipping rates of a Shipment",
+   "fieldname": "services_section",
+   "fieldtype": "Section Break",
+   "label": "Services"
+  },
+  {
+   "default": "1",
+   "fieldname": "product_ah",
+   "fieldtype": "Check",
+   "label": "Domestic (AH)"
+  },
+  {
+   "default": "0",
+   "fieldname": "product_pr",
+   "fieldtype": "Check",
+   "label": "Premium (PR)"
+  },
+  {
+   "fieldname": "column_break_products",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": "Delivery by 9:00, where DHL offers it",
+   "fieldname": "product_09",
+   "fieldtype": "Check",
+   "label": "Domestic 09"
+  },
+  {
+   "default": "0",
+   "description": "Delivery by 12:00, where DHL offers it",
+   "fieldname": "product_12",
+   "fieldtype": "Check",
+   "label": "Domestic 12"
+  },
+  {
+   "default": "0",
+   "description": "Where DHL offers it",
+   "fieldname": "product_dw",
+   "fieldtype": "Check",
+   "label": "Evening Delivery (DW)"
+  },
+  {
+   "fieldname": "column_break_services",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "AH",
+   "description": "What \"DHL24: Book and Print Labels\" on the Shipment list books with, unless another is picked",
+   "fieldname": "default_product",
+   "fieldtype": "Select",
+   "label": "Default Service",
+   "options": "AH\nPR\n09\n12\nDW"
+  },
+  {
+   "default": "BLP",
+   "description": "BLP: the label as a PDF. LBLP: the label on an A4 page. LP: the waybill.",
+   "fieldname": "label_type",
+   "fieldtype": "Select",
+   "label": "Label Type",
+   "options": "BLP\nLBLP\nLP"
+  },
+  {
+   "fieldname": "payment_section",
+   "fieldtype": "Section Break",
+   "label": "Payment"
+  },
+  {
+   "default": "Shipper",
+   "description": "A third party pays with the SAP Number above",
+   "fieldname": "payer_type",
+   "fieldtype": "Select",
+   "label": "Payer",
+   "options": "Shipper\nThird Party"
+  },
+  {
+   "fieldname": "column_break_payment",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "The cost center (MPK) printed on the waybill",
+   "fieldname": "costs_center",
+   "fieldtype": "Data",
+   "label": "Cost Center",
+   "length": 20
+  },
+  {
+   "fieldname": "waybill_section",
+   "fieldtype": "Section Break",
+   "label": "Waybill"
+  },
+  {
+   "description": "Printed on the waybill, up to 100 characters. A Jinja template with <code>doc</code>, the Shipment, and <code>sales_orders</code>, the Sales Orders of its Delivery Notes. For example: <code>{{ sales_orders|map(attribute=\"name\")|join(\", \") }}</code>",
+   "fieldname": "comment_template",
+   "fieldtype": "Code",
+   "label": "Comment",
+   "options": "Jinja"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-11-02 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Polish Shipping",
+ "name": "DHL24 Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

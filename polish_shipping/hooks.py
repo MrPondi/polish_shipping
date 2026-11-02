@@ -96,7 +96,7 @@ required_apps = ["erpnext", "erpnext_shipping"]
 # ------------
 
 # before_install = "polish_shipping.install.before_install"
-# after_install = "polish_shipping.install.after_install"
+after_install = "polish_shipping.install.after_install"
 
 # Uninstallation
 # ------------
@@ -166,6 +166,15 @@ required_apps = ["erpnext", "erpnext_shipping"]
 # 		"on_trash": "method"
 # 	}
 # }
+
+# Shipping Providers
+# ------------------
+# Registered with erpnext_shipping, whose Shipments get rates from and are booked with them. The name is what
+# Shipment.service_provider stores, so it stays once Shipments are booked.
+
+shipping_providers = {
+	"DHL24": "polish_shipping.dhl24.provider.DHL24Provider",
+}
 
 # Scheduled Tasks
 # ---------------
