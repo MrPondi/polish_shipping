@@ -159,13 +159,11 @@ after_install = "polish_shipping.install.after_install"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Shipment": {
+		"on_cancel": "polish_shipping.dhl24.events.delete_cancelled_shipment",
+	},
+}
 
 # Shipping Providers
 # ------------------
