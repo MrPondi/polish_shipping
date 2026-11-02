@@ -6,33 +6,12 @@ from erpnext_shipping.erpnext_shipping.providers import ShipmentContext, get_pro
 from erpnext_shipping.erpnext_shipping.shipping import create_shipment, fetch_shipping_rates
 from frappe.utils import add_days, today
 
+from polish_shipping.dhl24.batch import get_shipment_args
 from polish_shipping.dhl24.client import DHL24Error
 from polish_shipping.dhl24.provider import DHL24Provider, get_dhl24_provider, get_sales_orders
 from polish_shipping.dhl24.tests.utils import DHL24TestCase, make_pdf, make_shipment, set_settings
 
 PROVIDER_PATH = "polish_shipping.dhl24.provider.DHL24Provider"
-
-
-def get_shipment_args(doc) -> dict:
-	"""What the Shipment form sends to erpnext_shipping about a Shipment"""
-	return {
-		"pickup_from_type": doc.pickup_from_type,
-		"delivery_to_type": doc.delivery_to_type,
-		"pickup_address_name": doc.pickup_address_name,
-		"delivery_address_name": doc.delivery_address_name,
-		"parcels": [
-			{field: row.get(field) for field in ("length", "width", "height", "weight", "count")}
-			for row in doc.shipment_parcel
-		],
-		"description_of_content": doc.description_of_content,
-		"pickup_date": str(doc.pickup_date),
-		"value_of_goods": doc.value_of_goods,
-		# For a pickup from the Company, the contact is a User
-		"pickup_contact_name": doc.pickup_contact_person
-		if doc.pickup_from_type == "Company"
-		else doc.pickup_contact_name,
-		"delivery_contact_name": doc.delivery_contact_name,
-	}
 
 
 def make_context(shipment) -> ShipmentContext:
