@@ -71,7 +71,7 @@ class DHL24Shipment(Document):
 		return len(get_filtered_rows(filters))
 
 	@staticmethod
-	def get_stats(args):
+	def get_stats(**kwargs):
 		return {}
 
 

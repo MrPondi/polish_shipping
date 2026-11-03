@@ -207,7 +207,8 @@ def render_comment(settings, doc) -> str | None:
 	"""The comment printed on the waybill, from the template of DHL24 Settings"""
 	if not (settings.comment_template and doc):
 		return None
-	return frappe.render_template(
+	# Only a System Manager can change the template, and Frappe renders it in a sandbox
+	return frappe.render_template(  # nosemgrep: frappe-ssti
 		settings.comment_template, {"doc": doc, "sales_orders": get_sales_orders(doc)}
 	).strip()
 

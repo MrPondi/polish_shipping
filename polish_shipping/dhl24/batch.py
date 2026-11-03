@@ -35,12 +35,12 @@ def get_booking_options() -> dict:
 
 @frappe.whitelist(methods=["POST"])
 def book(
-	shipments,
+	shipments: list[str] | str,
 	product: str,
 	pickup_date: str,
-	book_courier=1,
-	pickup_from=None,
-	pickup_to=None,
+	book_courier: int = 1,
+	pickup_from: str | None = None,
+	pickup_to: str | None = None,
 	note: str | None = None,
 ):
 	"""
@@ -117,7 +117,8 @@ def book_shipments(shipments: list[str], product: str, pickup_date: str, courier
 				frappe.db.rollback()
 				summary["courier_errors"].append({"shipments": names, "error": get_error(e)})
 
-	frappe.db.commit()
+	# Committed before BOOKING_DONE, on which the list reloads
+	frappe.db.commit()  # nosemgrep: frappe-manual-commit
 	frappe.publish_progress(100, title=_("DHL24"))
 	frappe.publish_realtime(BOOKING_DONE, summary, user=frappe.session.user)
 
@@ -147,7 +148,7 @@ def book_shipment(name: str, product: str, pickup_date: str) -> bool:
 	# The day DHL24 has the shipment sent on
 	frappe.db.set_value("Shipment", name, "pickup_date", pickup_date)
 	# DHL24 has the shipment now, whatever happens next
-	frappe.db.commit()
+	frappe.db.commit()  # nosemgrep: frappe-manual-commit
 
 	try:
 		update_tracking(name)
@@ -191,7 +192,7 @@ def get_shipment_args(doc) -> dict:
 
 
 @frappe.whitelist(methods=["GET"])
-def download_labels(shipments):
+def download_labels(shipments: list[str] | str):
 	"""The labels of Shipments booked with DHL24, fetched from DHL24, in one PDF"""
 	shipment_ids = []
 	for name in frappe.parse_json(shipments):

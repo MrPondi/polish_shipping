@@ -39,7 +39,7 @@ def cancel_courier_booking(client, doc) -> bool:
 	if failed:
 		alert(
 			_("DHL24 kept courier booking {0}: {1}. Cancel it in DHL24, then delete shipment {2}.").format(
-				booking, ", ".join(filter(None, (result.error for result in failed))), doc.shipment_id
+				booking, ", ".join(result.error for result in failed if result.error), doc.shipment_id
 			)
 		)
 		return False
@@ -71,7 +71,7 @@ def delete_shipment(client, doc):
 			_("DHL24 shipment {0} is deleted.").format(doc.shipment_id), indicator="green", alert=True
 		)
 	else:
-		reasons = ", ".join(filter(None, (result.error for result in results))) or _("no reason given")
+		reasons = ", ".join(result.error for result in results if result.error) or _("no reason given")
 		alert(_("DHL24 kept shipment {0}: {1}").format(doc.shipment_id, reasons))
 
 

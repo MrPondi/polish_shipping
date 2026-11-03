@@ -53,7 +53,7 @@ def address(address: frappe._dict, name: str | None) -> dict:
 	if not (numbers := split_street(address.address_line1, address.address_line2)):
 		frappe.throw(
 			_(
-				'DHL24 needs the street and the house number of Address {0} apart, and they couldn\'t be told apart in "{1}". Write them as, for example, "Prosta 12/4".'
+				'DHL24 needs the street and the house number of Address {0} apart, and they could not be told apart in "{1}". Write them as, for example, "Prosta 12/4".'
 			).format(address.address_title, address.address_line1),
 			title=_("DHL24"),
 		)
@@ -95,7 +95,7 @@ def contact(contact: frappe._dict | None, address: frappe._dict) -> dict:
 	if not contact:
 		return {}
 
-	person = " ".join(filter(None, [contact.first_name, contact.last_name]))
+	person = " ".join(name for name in (contact.first_name, contact.last_name) if name)
 	phone = contact.phone or contact.mobile_no
 	try:
 		phone = phone_digits(phone, address.country_code)

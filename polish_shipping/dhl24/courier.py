@@ -14,7 +14,13 @@ NOTE_LENGTH = 50
 
 
 @frappe.whitelist(methods=["POST"])
-def book_courier(shipments, pickup_date, pickup_from, pickup_to, additional_info=None):
+def book_courier(
+	shipments: list[str] | str,
+	pickup_date: str,
+	pickup_from: str | None,
+	pickup_to: str | None,
+	additional_info: str | None = None,
+):
 	"""Book one courier for Shipments booked with DHL24 that are sent from one address"""
 	shipments = frappe.parse_json(shipments)
 	if not shipments:
